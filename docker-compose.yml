@@ -1,0 +1,25 @@
+services: # servicos que serao rodados
+  django:
+    container_name: django
+    build:
+      context: ./dcelery # context fala onde vai buscar o dockerfile
+      dockerfile: Dockerfile # dockerfile é o arquivo que contem as instrucoes para construir a imagem
+    command: python manage.py runserver 0.0.0.0:8000  # comando que roda no container
+
+    volumes:
+      - ./dcelery:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
+
+    ports:
+      - "8001:8000" # portas que serao mapeadas
+    
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=109312093u1jei1j89029292-1zs
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - DATABASE_URL=sqlite:///db.sqlite3
+      
+
+  redis:
+    image: redis:6
+    ports:
+      - "6379:6379"
