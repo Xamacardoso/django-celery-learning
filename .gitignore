@@ -1,0 +1,17 @@
+.env
+.env.development
+.env.production
+.env.test
+.venv
+__pycache__/
+
+*.pyc
+*.pyo
+*.pyd
+
+.DS_Store
+Thumbs.db
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
