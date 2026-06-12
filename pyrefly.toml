@@ -1,0 +1,5 @@
+python-interpreter-path = ".venv/bin/python"
+search-path = ["dcelery"]
+project-includes = ["dcelery"]
+python-version = "3.14"
+type-checking-mode = "basic"

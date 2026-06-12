@@ -1,6 +1,7 @@
 services: # servicos que serao rodados
   django:
     container_name: django
+    user: "1000:1000"
     build:
       context: ./dcelery # context fala onde vai buscar o dockerfile
       dockerfile: Dockerfile # dockerfile é o arquivo que contem as instrucoes para construir a imagem
@@ -29,9 +30,11 @@ services: # servicos que serao rodados
 
   celery:
     container_name: celery
+    user: "1000:1000"
     build:
       context: ./dcelery
       dockerfile: Dockerfile
+
     command: celery -A dcelery worker --loglevel=info
     
     volumes:
