@@ -17,9 +17,35 @@ services: # servicos que serao rodados
       - SECRET_KEY=109312093u1jei1j89029292-1zs
       - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
       - DATABASE_URL=sqlite:///db.sqlite3
+
+    depends_on:
+      - redis # significa que o container django vai esperar o redis iniciar
       
 
   redis:
-    image: redis:6
+    image: redis:8.8.0-alpine
     ports:
       - "6379:6379"
+
+  celery:
+    container_name: celery
+    build:
+      context: ./dcelery
+      dockerfile: Dockerfile
+    command: celery -A dcelery worker --loglevel=info
+    
+    volumes:
+      - ./dcelery:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
+
+    depends_on:
+      - redis
+      - django
+
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=109312093u1jei1j89029292-1zs
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+      - DATABASE_URL=sqlite:///db.sqlite3
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    

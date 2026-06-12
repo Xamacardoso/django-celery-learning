@@ -23,6 +23,11 @@ Atualmente, o projeto está preparado para utilizar a seguinte estrutura de mens
    * É um processo separado (incluído em [requirements.txt](@dcelery/requirements.txt)) que fica escutando o Broker.
    * Quando há uma nova tarefa na fila do Redis, o Celery a retira, executa a tarefa em segundo plano e, opcionalmente, devolve o resultado.
 
+4. **Result Backend (Redis)**
+   * É o local onde o Celery armazena o resultado da execução da tarefa.
+   * Pode ser o mesmo Broker ou um banco de dados separado.
+   * No nosso caso, será o mesmo Redis.
+
 ---
 
 ## ⏳ Fluxo de Execução (Vertical)
