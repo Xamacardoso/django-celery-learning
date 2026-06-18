@@ -35,7 +35,7 @@ services: # servicos que serao rodados
       context: ./dcelery
       dockerfile: Dockerfile
 
-    command: celery -A dcelery worker --loglevel=info
+    command: celery -A dcelery worker --loglevel=info -Q queue1
     
     volumes:
       - ./dcelery:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
@@ -59,7 +59,8 @@ services: # servicos que serao rodados
       context: ./celeryworker
       dockerfile: Dockerfile
 
-    command: celery -A celerytask worker --loglevel=info
+    # "-Q <queue_name>" especifica que este worker so vai processar tasks da <queue_name>
+    command: celery -A celerytask worker --loglevel=info -Q queue2
     
     volumes:
       - ./celeryworker:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
