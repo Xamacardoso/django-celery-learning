@@ -20,7 +20,7 @@ Atualmente, o projeto está preparado para utilizar a seguinte estrutura de mens
    * Configurado via Docker Compose como o serviço `redis`.
 
 3. **Consumidor / Worker (Celery)**
-   * É um processo separado (incluído em [requirements.txt](@dcelery/requirements.txt)) que fica escutando o Broker.
+   * É um processo separado (incluído em [requirements.txt](dcelery/requirements.txt)) que fica escutando o Broker.
    * Quando há uma nova tarefa na fila do Redis, o Celery a retira, executa a tarefa em segundo plano e, opcionalmente, devolve o resultado.
 
 4. **Result Backend (Redis)**
@@ -57,7 +57,7 @@ Quando um usuário faz uma ação que exige processamento pesado:
 
 ## 🐳 Integração no Docker Compose
 
-Atualmente, os serviços estão declarados no [docker-compose.yml](file:///home/xama/Documents/xama-projetos/django-celery-course/docker-compose.yml):
+Atualmente, os serviços estão declarados no [docker-compose.yml](docker-compose.yml):
 
 ```text
 ┌──────────────────────────────────────────┐

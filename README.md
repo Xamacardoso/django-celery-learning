@@ -56,13 +56,13 @@ django-celery-course/
   2. **`redis`**:
      * Sobe uma instância do Redis na versão 6 exposta na porta padrão `6379`. É o intermediário (Broker) responsável por receber as tarefas assíncronas do Django e enfileirá-las para o Celery.
 
-* **[dcelery/Dockerfile](@dcelery/Dockerfile)** - Define a imagem Docker para o container Django:
+* **[dcelery/Dockerfile](dcelery/Dockerfile)** - Define a imagem Docker para o container Django:
   * Utiliza a imagem leve `python:3.14.4-alpine`.
   * Configura variáveis de ambiente do Python (`PYTHONDONTWRITEBYTECODE=1` para evitar arquivos `.pyc` e `PYTHONUNBUFFERED=1` para exibir logs em tempo real).
   * Atualiza o `pip`, instala os pacotes descritos em `requirements.txt`.
   * Copia o script `entrypoint.sh` e define ele como o `ENTRYPOINT` principal.
 
-* **[dcelery/entrypoint.sh](@dcelery/entrypoint.sh)** - Um script executado assim que o container `django` inicia:
+* **[dcelery/entrypoint.sh](dcelery/entrypoint.sh)** - Um script executado assim que o container `django` inicia:
   1. Aplica as migrações automáticas de banco de dados (`python manage.py migrate`).
   2. Executa o comando final do serviço (`exec "$@"`) garantindo que o processo web do Django rode com o PID 1 (permitindo o encerramento correto do container).
 
@@ -72,7 +72,7 @@ django-celery-course/
 
 * **[dcelery/requirements.txt](@dcelery/requirements.txt)** - Contém as bibliotecas necessárias para rodar o projeto, destacando-se o `Django`, `celery`, `redis` e as ferramentas CLI necessárias para o Celery.
 
-* **[dcelery/dcelery/settings.py](@dcelery/dcelery/settings.py)** - Arquivo central de configurações do Django adaptado para containers, onde:
+* **[dcelery/dcelery/settings.py](dcelery/dcelery/settings.py)** - Arquivo central de configurações do Django adaptado para containers, onde:
   * `SECRET_KEY` é carregada via variável de ambiente, com fallback de desenvolvimento.
   * `DEBUG` e `ALLOWED_HOSTS` são parametrizados para rodar de maneira flexível.
 
