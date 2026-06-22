@@ -16,9 +16,15 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Configura as rotas de tasks para different queues (diferentes filas)
 # Isso diz pro celery que a task shared_test deve ser processada pela queue1 e shared_test2 pela queue2
-app.conf.task_routes = {
-    'newapp.tasks.shared_test': {'queue': 'queue1'},
-    'newapp.tasks.shared_test2': {'queue': 'queue2'},
+# app.conf.task_routes = {
+#     'newapp.tasks.shared_test': {'queue': 'queue1'},
+#     'newapp.tasks.shared_test2': {'queue': 'queue2'},
+# }
+
+app.conf.broker_transport_options = {
+    "priority_steps": list(range(10)),
+    "sep": ":",
+    "queue_order_strategy": "priority",
 }
 
 # Diz pro celery para buscar tasks

@@ -35,7 +35,7 @@ services: # servicos que serao rodados
       context: ./dcelery
       dockerfile: Dockerfile
 
-    command: celery -A dcelery worker --loglevel=info -Q queue1
+    command: celery -A dcelery worker --loglevel=info -Q celery,celery:1,celery:2,celery:3
     
     volumes:
       - ./dcelery:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
@@ -52,27 +52,27 @@ services: # servicos que serao rodados
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
   
-  celery2:
-    container_name: celery2
-    user: "1000:1000"
-    build:
-      context: ./celeryworker
-      dockerfile: Dockerfile
+  # celery2:
+  #   container_name: celery2
+  #   user: "1000:1000"
+  #   build:
+  #     context: ./celeryworker
+  #     dockerfile: Dockerfile
 
-    # "-Q <queue_name>" especifica que este worker so vai processar tasks da <queue_name>
-    command: celery -A celerytask worker --loglevel=info -Q queue2
+  #   # "-Q <queue_name>" especifica que este worker so vai processar tasks da <queue_name>
+  #   command: celery -A celerytask worker --loglevel=info -Q queue2
     
-    volumes:
-      - ./celeryworker:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
+  #   volumes:
+  #     - ./celeryworker:/usr/src/app/ # volume é para compartilhar arquivos entre o host e o container, funcionando como um watch
 
-    depends_on:
-      - redis
-      - django
+  #   depends_on:
+  #     - redis
+  #     - django
 
-    environment:
-      - DEBUG=1
-      - SECRET_KEY=109312093u1jei1j89029292-1zs
-      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
-      - DATABASE_URL=sqlite:///db.sqlite3
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+  #   environment:
+  #     - DEBUG=1
+  #     - SECRET_KEY=109312093u1jei1j89029292-1zs
+  #     - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+  #     - DATABASE_URL=sqlite:///db.sqlite3
+  #     - CELERY_BROKER_URL=redis://redis:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis:6379/0
